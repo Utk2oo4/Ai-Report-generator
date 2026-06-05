@@ -1,0 +1,29 @@
+services:
+  - type: web
+    name: daily-financial-report-agent
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m agent.main_agent
+    healthCheckPath: /health
+    envVars:
+      - key: GOOGLE_API_KEY
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_WHATSAPP_FROM
+        sync: false
+      - key: TWILIO_WHATSAPP_TO
+        sync: false
+      - key: NEWSAPI_KEY
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: PORT
+        value: "8080"

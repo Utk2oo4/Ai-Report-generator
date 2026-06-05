@@ -1,0 +1,29 @@
+# Core LangChain
+langchain==0.3.25
+langchain-groq==0.2.4
+langchain-core==0.3.60
+langchain-community==0.3.24
+
+# Market Data
+yfinance==0.2.54
+
+# News
+newsapi-python==0.2.7
+
+# Report Generation
+python-docx==1.1.2
+
+# Cloud Storage
+cloudinary==1.42.1
+
+# WhatsApp / Twilio
+twilio==9.4.6
+
+# Scheduling + Web Server
+apscheduler==3.11.0
+flask==3.1.1
+
+# Utilities
+python-dotenv==1.1.0
+pytz==2025.2
+requests==2.32.3
