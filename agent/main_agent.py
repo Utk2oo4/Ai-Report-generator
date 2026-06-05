@@ -54,11 +54,8 @@ from agent.cloudinary_uploader     import upload_report
 from agent.whatsapp_sender         import send_whatsapp_message
 
 # ── LLM (Groq — free tier, ultra-fast inference) ─────────────────────────────
-llm = ChatGroq(
-    model       = "llama-3.3-70b-versatile",
-    api_key     = os.getenv("GROQ_API_KEY", ""),
-    temperature = 0.35,
-)
+# Initialized lazily inside _generate_ai_commentary() so the Flask app can
+# start and serve /health even when GROQ_API_KEY is not yet configured.
 
 # ── State tracking ────────────────────────────────────────────────────────────
 _last_run_status: dict = {
@@ -101,6 +98,14 @@ Write the commentary now:"""
 
     # ── Try Groq (primary) ────────────────────────────────────────────────────
     try:
+        groq_api_key = os.getenv("GROQ_API_KEY", "")
+        if not groq_api_key:
+            raise ValueError("GROQ_API_KEY is not set")
+        llm = ChatGroq(
+            model       = "llama-3.3-70b-versatile",
+            api_key     = groq_api_key,
+            temperature = 0.35,
+        )
         response = llm.invoke(prompt)
         logger.info("AI commentary generated via Groq (llama-3.3-70b-versatile)")
         return response.content.strip()
